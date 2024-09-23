@@ -5,46 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Airline Manager</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Main menu and airline screens -->
-    <div class="grid-container">
-        <div class="airline-list">
-            <!-- List of airlines created before -->
+    <div id="app">
+        <!-- Main Menu -->
+        <div id="menu">
+            <h1>Virtual Airline Manager</h1>
+            <div class="grid-container" id="airline-list"></div>
+            <button id="create-airline-btn" class="create-btn"><i class="fas fa-plus"></i> Create Airline</button>
+            <button id="join-airline-btn" class="join-btn"><i class="fas fa-sign-in-alt"></i> Join Airline</button>
         </div>
-        <div class="create-airline">
-            <!-- Plus sign on the bottom right corner to create a new airline -->
-            <i class="fas fa-plus"></i>
-        </div>
-        <div class="currency-value">
-            <!-- Currency value displayed on top of the screen -->
-        </div>
-    </div>
 
-    <!-- Side menu and airline screens -->
-    <div class="side-menu">
-        <ul>
-            <li><a href="#" class="active">Main Screen</a></li>
-            <li><a href="#">Our Fleet</a></li>
-            <li><a href="#">Airline Information</a></li>
-            <li><a href="#">Flight History</a></li>
-            <li><a href="#">Airline Contracts</a></li>
-            <li><a href="#">Airline Members</a></li>
-            <li><a href="#">Exit Airline</a></li>
-        </ul>
-    </div>
+        <!-- Airline Management -->
+        <div id="airline-screen" class="hidden">
+            <div class="top-bar">
+                <span id="currency">Bank: $0</span>
+                <button id="exit-airline-btn" class="exit-btn">Exit Airline</button>
+            </div>
+            <div class="sidebar">
+                <button id="main-screen-btn">Main Screen</button>
+                <button id="fleet-btn">Our Fleet</button>
+                <button id="contracts-btn">Airline Contracts</button>
+                <button id="history-btn">Flight History</button>
+                <button id="info-btn">Airline Information</button>
+                <button id="members-btn">Airline Members</button>
+            </div>
 
-    <!-- Create flight form -->
-    <div class="create-flight">
-        <!-- Form to input flight details -->
+            <div class="content">
+                <!-- Airline Main Screen -->
+                <div id="main-screen" class="content-section">Welcome to your Airline</div>
+
+                <!-- Fleet Management -->
+                <div id="fleet-screen" class="content-section hidden">
+                    <h2>Our Fleet</h2>
+                    <ul id="fleet-list"></ul>
+                    <button id="order-aircraft-btn">Order Aircraft</button>
+                    <div id="order-aircraft-modal" class="hidden">
+                        <h3>Order Aircraft</h3>
+                        <label for="aircraft-type">Select Aircraft:</label>
+                        <select id="aircraft-type">
+                            <!-- Aircraft types (for example purposes) -->
+                            <option value="Boeing 737">Boeing 737</option>
+                            <option value="Airbus A320">Airbus A320</option>
+                        </select>
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" value="1" min="1">
+                        <label for="airport">Delivery Airport:</label>
+                        <input type="text" id="airport" placeholder="Enter Airport Code">
+                        <button id="buy-aircraft-btn">Buy</button>
+                    </div>
+                </div>
+
+                <!-- Airline Contracts -->
+                <div id="contracts-screen" class="content-section hidden">
+                    <h2>Airline Contracts</h2>
+                    <ul id="contract-list"></ul>
+                    <button id="create-contract-btn">Create New Contract</button>
+                    <div id="create-contract-modal" class="hidden">
+                        <h3>Create Contract</h3>
+                        <label for="contract-type">Contract Type:</label>
+                        <select id="contract-type">
+                            <option value="Leasing">Leasing</option>
+                            <option value="Landing Fees">Landing Fees</option>
+                        </select>
+                        <label for="contract-airport">Airport Code:</label>
+                        <input type="text" id="contract-airport" placeholder="Enter Airport Code">
+                        <button id="create-contract-submit">Create Contract</button>
+                    </div>
+                </div>
+
+                <!-- Flight History -->
+                <div id="history-screen" class="content-section hidden">
+                    <h2>Flight History</h2>
+                    <ul id="flight-history-list"></ul>
+                </div>
+
+                <!-- Airline Information -->
+                <div id="info-screen" class="content-section hidden">
+                    <h2>Airline Information</h2>
+                    <ul id="airline-info">
+                        <li>Name: <span id="info-name"></span></li>
+                        <li>Created: <span id="info-created"></span></li>
+                        <li>Total Bank: <span id="info-bank"></span></li>
+                        <li>Members: <span id="info-members"></span></li>
+                    </ul>
+                </div>
+
+                <!-- Airline Members and Role Management -->
+                <div id="members-screen" class="content-section hidden">
+                    <h2>Airline Members</h2>
+                    <ul id="members-list"></ul>
+                    <div id="assign-role-modal" class="hidden">
+                        <h3>Assign Role</h3>
+                        <label for="member-role">Select Role:</label>
+                        <select id="member-role">
+                            <option value="Owner">Owner</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Pilot">Pilot</option>
+                        </select>
+                        <button id="assign-role-btn">Assign Role</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
-    <script src="airline.js"></script>
-    <script src="flight.js"></script>
-    <script src="data.js"></script>
-    <script src="github-api.js"></script>
-    <script src="github-oauth.js"></script>
 </body>
 </html>
