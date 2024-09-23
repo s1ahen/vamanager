@@ -3,6 +3,19 @@ let airlines = JSON.parse(localStorage.getItem("airlines")) || [];
 let currentAirline = null;
 let currentUserRole = 'Owner'; // Role for demonstration, normally determined by login
 
+// Array of available aircraft for easy addition
+const availableAircraft = [
+    { name: "Boeing 737", maxPAX: 180, maxDistance: 5000, price: 100000000 },
+    { name: "Airbus A320", maxPAX: 160, maxDistance: 6100, price: 90000000 },
+    { name: "Boeing 787", maxPAX: 250, maxDistance: 13800, price: 230000000 },
+    { name: "Airbus A350", maxPAX: 300, maxDistance: 14800, price: 280000000 }
+];
+
+// Generate a unique airline code
+function generateAirlineCode() {
+    return Math.random().toString(36).substr(2, 6).toUpperCase(); // 6 character random code
+}
+
 // Load airlines to main menu
 function loadAirlines() {
     const airlineList = document.getElementById('airline-list');
@@ -28,6 +41,7 @@ document.getElementById('create-airline-btn').addEventListener('click', () => {
             members: [{ name: 'You', role: 'Owner' }], // Owner is the creator
             contracts: [],
             created: new Date().toLocaleDateString(),
+            code: generateAirlineCode() // Generate and assign the airline code
         };
         airlines.push(airline);
         localStorage.setItem('airlines', JSON.stringify(airlines));
@@ -68,44 +82,67 @@ function loadFleet() {
 
 // Add fleet ordering functionality
 document.getElementById('order-aircraft-btn').addEventListener('click', () => {
+    const aircraftTypeSelect = document.getElementById('aircraft-type');
+    aircraftTypeSelect.innerHTML = ''; // Clear the dropdown
+
+    availableAircraft.forEach(aircraft => {
+        const option = document.createElement('option');
+        option.value = aircraft.name;
+        option.textContent = `${aircraft.name} - $${aircraft.price.toLocaleString()}`;
+        aircraftTypeSelect.appendChild(option);
+    });
+
     document.getElementById('order-aircraft-modal').classList.toggle('hidden');
 });
 
 document.getElementById('buy-aircraft-btn').addEventListener('click', () => {
-    const aircraftType = document.getElementById('aircraft-type').value;
+    const selectedAircraftName = document.getElementById('aircraft-type').value;
     const quantity = parseInt(document.getElementById('quantity').value);
     const airport = document.getElementById('airport').value;
-    
+
     if (!airport || quantity < 1) return alert('Invalid input');
 
-    // Simple price calculation (for demonstration purposes)
-    const pricePerAircraft = 100000; // Set default price per aircraft
-    const totalCost = pricePerAircraft * quantity;
+    const selectedAircraft = availableAircraft.find(ac => ac.name === selectedAircraftName);
+    const totalCost = selectedAircraft.price * quantity;
+
     if (currentAirline.currency < totalCost) {
-        alert('Insufficient funds');
-        return;
+        return alert('Not enough money to buy the aircraft!');
     }
 
     currentAirline.currency -= totalCost;
-    document.getElementById('currency').textContent = `Bank: $${currentAirline.currency}`;
-    
     for (let i = 0; i < quantity; i++) {
-        currentAirline.fleet.push({ type: aircraftType, maxPAX: 180, maxDistance: 6000, airport });
+        currentAirline.fleet.push({
+            type: selectedAircraft.name,
+            maxPAX: selectedAircraft.maxPAX,
+            maxDistance: selectedAircraft.maxDistance,
+            boughtOn: new Date().toLocaleDateString(),
+            stationedAt: airport
+        });
     }
-    
+
     localStorage.setItem('airlines', JSON.stringify(airlines));
     loadFleet();
+    loadAirlineInfo();
     document.getElementById('order-aircraft-modal').classList.add('hidden');
 });
 
+// Load airline information (including airline code)
+function loadAirlineInfo() {
+    document.getElementById('info-name').textContent = currentAirline.name;
+    document.getElementById('info-created').textContent = `Created: ${currentAirline.created}`;
+    document.getElementById('info-bank').textContent = `Bank Balance: $${currentAirline.currency}`;
+    document.getElementById('info-members').textContent = `Members: ${currentAirline.members.length}`;
+    document.getElementById('info-code').textContent = `Airline Code: ${currentAirline.code}`;
+}
+
 // Load flight history into the history section
 function loadFlightHistory() {
-    const flightHistoryList = document.getElementById('flight-history-list');
-    flightHistoryList.innerHTML = '';
+    const historyList = document.getElementById('history-list');
+    historyList.innerHTML = '';
     currentAirline.history.forEach(flight => {
         const li = document.createElement('li');
-        li.textContent = `${flight.pilot}, Aircraft: ${flight.aircraft}, Date: ${flight.date}`;
-        flightHistoryList.appendChild(li);
+        li.textContent = `${flight.pilot} flew from ${flight.departure} to ${flight.arrival} using ${flight.aircraft}`;
+        historyList.appendChild(li);
     });
 }
 
@@ -115,48 +152,23 @@ function loadContracts() {
     contractList.innerHTML = '';
     currentAirline.contracts.forEach(contract => {
         const li = document.createElement('li');
-        li.textContent = `${contract.type}, Airport: ${contract.airport}`;
+        li.textContent = `Contract for ${contract.aircraft} at ${contract.airport}`;
         contractList.appendChild(li);
     });
 }
 
-// Load airline information
-function loadAirlineInfo() {
-    document.getElementById('info-name').textContent = currentAirline.name;
-    document.getElementById('info-created').textContent = currentAirline.created;
-    document.getElementById('info-bank').textContent = `$${currentAirline.currency}`;
-    document.getElementById('info-members').textContent = currentAirline.members.length;
-}
-
 // Load members into the members section
 function loadMembers() {
-    const membersList = document.getElementById('members-list');
-    membersList.innerHTML = '';
+    const memberList = document.getElementById('member-list');
+    memberList.innerHTML = '';
     currentAirline.members.forEach(member => {
         const li = document.createElement('li');
         li.textContent = `${member.name} - ${member.role}`;
-        li.onclick = () => {
-            if (currentUserRole === 'Owner' || currentUserRole === 'Manager') {
-                assignRole(member);
-            }
-        };
-        membersList.appendChild(li);
+        memberList.appendChild(li);
     });
 }
 
-// Role assignment functionality
-function assignRole(member) {
-    document.getElementById('assign-role-modal').classList.remove('hidden');
-    document.getElementById('assign-role-btn').onclick = () => {
-        const role = document.getElementById('member-role').value;
-        member.role = role;
-        localStorage.setItem('airlines', JSON.stringify(airlines));
-        loadMembers();
-        document.getElementById('assign-role-modal').classList.add('hidden');
-    };
-}
-
-// Button navigation
+// Button navigation between sections
 document.getElementById('main-screen-btn').addEventListener('click', () => navigateTo('main-screen'));
 document.getElementById('fleet-btn').addEventListener('click', () => navigateTo('fleet-screen'));
 document.getElementById('contracts-btn').addEventListener('click', () => navigateTo('contracts-screen'));

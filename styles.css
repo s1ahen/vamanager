@@ -1,131 +1,138 @@
-/* Styles based on the provided color palette */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #181C14;
-    color: #ECDFCC;
+/* Reset default margin/padding */
+* {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Use full screen layout */
+html, body {
+    height: 100%;
+    background-color: #181818;
+    font-family: 'Arial', sans-serif;
+    color: #ECDFCC; /* Off-white for text */
 }
 
 #app {
-    width: 90%;
-    max-width: 1200px;
-}
-
-#menu, #airline-screen {
-    background-color: #3C3D37;
-    border-radius: 10px;
-    padding: 20px;
-}
-
-h1 {
-    text-align: center;
-    color: #ECDFCC;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-}
-
-.create-btn, .join-btn {
-    background-color: #697565;
-    color: #ECDFCC;
-    padding: 15px;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    font-size: 16px;
-}
-
-.create-btn:hover, .join-btn:hover {
-    background-color: #ECDFCC;
-    color: #181C14;
-}
-
-#airline-screen {
-    display: flex;
-    flex-direction: row;
-}
-
-.sidebar {
-    width: 20%;
-    background-color: #697565;
-    padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    height: 100%;
 }
 
-.sidebar button {
-    background-color: #3C3D37;
-    color: #ECDFCC;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+/* Center the content and make it full-screen */
+#menu, #airline-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
 
-.sidebar button:hover {
-    background-color: #ECDFCC;
-    color: #181C14;
-}
-
+/* Top bar with currency and exit button */
 .top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    width: 100%;
+    padding: 20px;
+    background-color: #242424;
+    color: #ECDFCC;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#currency {
+    font-size: 1.2rem;
 }
 
 .exit-btn {
     background-color: #697565;
     color: #ECDFCC;
-    padding: 10px;
     border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.content {
-    width: 80%;
+.exit-btn:hover {
+    background-color: #ECDFCC;
+    color: #181818;
+}
+
+/* Sidebar on the left for navigation */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 200px;
+    height: calc(100% - 80px);
+    background-color: #242424;
     padding: 20px;
 }
 
-.hidden {
-    display: none;
+.sidebar button {
+    background-color: #333333;
+    color: #ECDFCC;
+    border: none;
+    margin-bottom: 15px;
+    padding: 15px;
+    font-size: 1rem;
+    text-align: left;
+    border-radius: 5px;
+    cursor: pointer;
 }
-/* Adjustments for modal visibility and additional content */
 
-.hidden {
-    display: none;
+.sidebar button:hover {
+    background-color: #697565;
+    color: #181818;
 }
 
-/* Modal styling */
+/* Content section that changes based on the menu selection */
+.content {
+    flex-grow: 1;
+    margin-left: 220px;
+    padding: 100px 50px;
+    background-color: #181818;
+    overflow-y: auto;
+}
+
+h2, h3 {
+    color: #ECDFCC;
+}
+
+ul {
+    list-style: none;
+    margin-top: 20px;
+}
+
+li {
+    padding: 10px 0;
+    font-size: 1.1rem;
+}
+
+/* Modal styles */
 #order-aircraft-modal, #create-contract-modal, #assign-role-modal {
     background-color: #3C3D37;
-    padding: 15px;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-
-label {
-    display: block;
-    margin-top: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 input, select, button {
-    margin-top: 5px;
-    padding: 10px;
+    margin-top: 10px;
+    padding: 12px;
     border-radius: 5px;
     border: none;
     width: 100%;
+    font-size: 1rem;
 }
 
 button {
@@ -136,10 +143,55 @@ button {
 
 button:hover {
     background-color: #ECDFCC;
-    color: #181C14;
+    color: #181818;
+}
+/* Additional styles for spacing and layout */
+.content-section h2 {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3C3D37;
+    padding-bottom: 10px;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+/* Add some space between information blocks */
+.content-section p, 
+.content-section ul {
+    margin-bottom: 20px;
 }
+
+#info-screen div {
+    margin-bottom: 15px;
+}
+
+/* Space between labels and inputs for forms */
+form input, 
+form select, 
+form button {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    font-size: 1rem;
+}
+
+/* Update modal styles for spacing */
+.modal {
+    background-color: #3C3D37;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+input, select, button {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    font-size: 1rem;
+}
+
+/* Rest of your styles remain the same */

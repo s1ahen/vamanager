@@ -5,24 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Airline Manager</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app">
         <!-- Main Menu -->
         <div id="menu">
-            <h1>Virtual Airline Manager</h1>
-            <div class="grid-container" id="airline-list"></div>
-            <button id="create-airline-btn" class="create-btn"><i class="fas fa-plus"></i> Create Airline</button>
-            <button id="join-airline-btn" class="join-btn"><i class="fas fa-sign-in-alt"></i> Join Airline</button>
+            <h1>Your Airlines</h1>
+            <div id="airline-list"></div>
+            <button id="create-airline-btn">+ Create New Airline</button>
         </div>
 
-        <!-- Airline Management -->
+        <!-- Airline Screen -->
         <div id="airline-screen" class="hidden">
+            <!-- Top Bar -->
             <div class="top-bar">
                 <span id="currency">Bank: $0</span>
                 <button id="exit-airline-btn" class="exit-btn">Exit Airline</button>
             </div>
+
+            <!-- Sidebar for navigation -->
             <div class="sidebar">
                 <button id="main-screen-btn">Main Screen</button>
                 <button id="fleet-btn">Our Fleet</button>
@@ -32,79 +33,80 @@
                 <button id="members-btn">Airline Members</button>
             </div>
 
+            <!-- Content Area -->
             <div class="content">
-                <!-- Airline Main Screen -->
-                <div id="main-screen" class="content-section">Welcome to your Airline</div>
+                <!-- Main Screen Section -->
+                <div id="main-screen" class="content-section">
+                    <h2>Welcome to the Airline Manager</h2>
+                    <p>This is the main screen of your airline.</p>
+                    <button id="create-flight-btn">Create Flight</button>
+                </div>
 
-                <!-- Fleet Management -->
+                <!-- Fleet Screen -->
                 <div id="fleet-screen" class="content-section hidden">
                     <h2>Our Fleet</h2>
                     <ul id="fleet-list"></ul>
                     <button id="order-aircraft-btn">Order Aircraft</button>
-                    <div id="order-aircraft-modal" class="hidden">
-                        <h3>Order Aircraft</h3>
-                        <label for="aircraft-type">Select Aircraft:</label>
-                        <select id="aircraft-type">
-                            <!-- Aircraft types (for example purposes) -->
-                            <option value="Boeing 737">Boeing 737</option>
-                            <option value="Airbus A320">Airbus A320</option>
-                        </select>
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" value="1" min="1">
-                        <label for="airport">Delivery Airport:</label>
-                        <input type="text" id="airport" placeholder="Enter Airport Code">
+
+                    <!-- Modal to order new aircraft -->
+                    <div id="order-aircraft-modal" class="modal hidden">
+                        <label for="aircraft-type">Select Aircraft</label>
+                        <select id="aircraft-type"></select>
+
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" min="1" value="1">
+
+                        <label for="airport">Select Delivery Airport</label>
+                        <input type="text" id="airport" placeholder="Enter airport code">
+
                         <button id="buy-aircraft-btn">Buy</button>
                     </div>
                 </div>
 
-                <!-- Airline Contracts -->
+                <!-- Contracts Screen -->
                 <div id="contracts-screen" class="content-section hidden">
                     <h2>Airline Contracts</h2>
+                    <p>Here you can manage contracts for aircraft leasing, landing fees, and more.</p>
                     <ul id="contract-list"></ul>
-                    <button id="create-contract-btn">Create New Contract</button>
-                    <div id="create-contract-modal" class="hidden">
-                        <h3>Create Contract</h3>
-                        <label for="contract-type">Contract Type:</label>
-                        <select id="contract-type">
-                            <option value="Leasing">Leasing</option>
-                            <option value="Landing Fees">Landing Fees</option>
-                        </select>
-                        <label for="contract-airport">Airport Code:</label>
-                        <input type="text" id="contract-airport" placeholder="Enter Airport Code">
-                        <button id="create-contract-submit">Create Contract</button>
+                    <button id="create-contract-btn">Create Contract</button>
+
+                    <!-- Modal to create a new contract -->
+                    <div id="create-contract-modal" class="modal hidden">
+                        <!-- Contract creation form (add fields as needed) -->
                     </div>
                 </div>
 
-                <!-- Flight History -->
+                <!-- Flight History Screen -->
                 <div id="history-screen" class="content-section hidden">
                     <h2>Flight History</h2>
-                    <ul id="flight-history-list"></ul>
+                    <ul id="history-list"></ul>
                 </div>
 
-                <!-- Airline Information -->
+                <!-- Airline Information Screen -->
                 <div id="info-screen" class="content-section hidden">
                     <h2>Airline Information</h2>
-                    <ul id="airline-info">
-                        <li>Name: <span id="info-name"></span></li>
-                        <li>Created: <span id="info-created"></span></li>
-                        <li>Total Bank: <span id="info-bank"></span></li>
-                        <li>Members: <span id="info-members"></span></li>
-                    </ul>
+                    <div id="info-name">Airline Name</div>
+                    <div id="info-created">Created Date</div>
+                    <div id="info-bank">Bank Balance</div>
+                    <div id="info-members">Members Count</div>
+                    <div id="info-code">Airline Code</div> <!-- Display the unique airline code -->
                 </div>
 
-                <!-- Airline Members and Role Management -->
+                <!-- Airline Members Screen -->
                 <div id="members-screen" class="content-section hidden">
                     <h2>Airline Members</h2>
-                    <ul id="members-list"></ul>
-                    <div id="assign-role-modal" class="hidden">
-                        <h3>Assign Role</h3>
-                        <label for="member-role">Select Role:</label>
+                    <ul id="member-list"></ul>
+                    <button id="assign-role-btn">Assign Role</button>
+
+                    <!-- Modal to assign member roles -->
+                    <div id="assign-role-modal" class="modal hidden">
+                        <label for="member-role">Assign Role</label>
                         <select id="member-role">
                             <option value="Owner">Owner</option>
                             <option value="Manager">Manager</option>
                             <option value="Pilot">Pilot</option>
                         </select>
-                        <button id="assign-role-btn">Assign Role</button>
+                        <button id="save-role-btn">Save Role</button>
                     </div>
                 </div>
             </div>
