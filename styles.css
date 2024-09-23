@@ -1,197 +1,220 @@
-/* Reset default margin/padding */
-* {
+body {
+    font-family: Arial, sans-serif;
+    background-color: #181818; /* Dark background */
+    color: white; /* White text */
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-/* Use full screen layout */
-html, body {
-    height: 100%;
-    background-color: #181818;
-    font-family: 'Arial', sans-serif;
-    color: #ECDFCC; /* Off-white for text */
 }
 
 #app {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
 }
 
-/* Center the content and make it full-screen */
 #menu, #airline-screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
-/* Top bar with currency and exit button */
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
     padding: 20px;
-    background-color: #242424;
-    color: #ECDFCC;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-#currency {
-    font-size: 1.2rem;
-}
-
-.exit-btn {
-    background-color: #697565;
-    color: #ECDFCC;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.exit-btn:hover {
-    background-color: #ECDFCC;
-    color: #181818;
-}
-
-/* Sidebar on the left for navigation */
-.sidebar {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    position: fixed;
-    top: 80px;
-    left: 0;
+}
+
+#menu {
+    background-color: #333; /* Darker grey for menu */
+}
+
+#airline-screen {
+    background-color: #222; /* Even darker for airline screen */
+}
+
+.sidebar {
     width: 200px;
-    height: calc(100% - 80px);
-    background-color: #242424;
+    float: left;
+    background-color: #333; /* Sidebar color */
     padding: 20px;
 }
 
 .sidebar button {
-    background-color: #333333;
-    color: #ECDFCC;
+    display: block;
+    background: none;
+    color: white;
     border: none;
-    margin-bottom: 15px;
-    padding: 15px;
-    font-size: 1rem;
-    text-align: left;
-    border-radius: 5px;
+    padding: 10px 0;
     cursor: pointer;
 }
 
 .sidebar button:hover {
-    background-color: #697565;
-    color: #181818;
+    color: #ccc; /* Lighter on hover */
 }
 
-/* Content section that changes based on the menu selection */
 .content {
-    flex-grow: 1;
-    margin-left: 220px;
-    padding: 100px 50px;
-    background-color: #181818;
-    overflow-y: auto;
+    margin-left: 220px; /* Space for the sidebar */
+    padding: 20px;
 }
 
-h2, h3 {
-    color: #ECDFCC;
+.content-section {
+    display: none; /* Hide all sections initially */
+}
+
+.content-section.hidden {
+    display: none; /* Ensure hidden sections remain hidden */
+}
+
+.hidden {
+    display: none; /* Class to hide elements */
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exit-btn {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.exit-btn:hover {
+    background-color: #555; /* Darker on hover */
+}
+
+h2 {
+    margin-top: 20px;
 }
 
 ul {
     list-style: none;
-    margin-top: 20px;
+    padding: 0;
 }
 
-li {
-    padding: 10px 0;
-    font-size: 1.1rem;
+ul li {
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #333; /* List item background */
 }
 
-/* Modal styles */
-#order-aircraft-modal, #create-contract-modal, #assign-role-modal {
-    background-color: #3C3D37;
+ul li:hover {
+    background-color: #444; /* List item hover effect */
+}
+
+.modal {
+    display: none; /* Initially hidden */
+}
+
+.modal.hidden {
+    display: block; /* Show when not hidden */
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #181818; /* Dark background */
+    color: white; /* White text */
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#menu, #airline-screen {
     padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-input, select, button {
-    margin-top: 10px;
-    padding: 12px;
-    border-radius: 5px;
-    border: none;
-    width: 100%;
-    font-size: 1rem;
+#menu {
+    background-color: #333; /* Darker grey for menu */
 }
 
-button {
-    background-color: #697565;
-    color: #ECDFCC;
+#airline-screen {
+    background-color: #222; /* Even darker for airline screen */
+}
+
+.sidebar {
+    width: 200px;
+    float: left;
+    background-color: #333; /* Sidebar color */
+    padding: 20px;
+}
+
+.sidebar button {
+    display: block;
+    background: none;
+    color: white;
+    border: none;
+    padding: 10px 0;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #ECDFCC;
-    color: #181818;
-}
-/* Additional styles for spacing and layout */
-.content-section h2 {
-    margin-bottom: 20px;
-    border-bottom: 2px solid #3C3D37;
-    padding-bottom: 10px;
+.sidebar button:hover {
+    color: #ccc; /* Lighter on hover */
 }
 
-/* Add some space between information blocks */
-.content-section p, 
-.content-section ul {
-    margin-bottom: 20px;
-}
-
-#info-screen div {
-    margin-bottom: 15px;
-}
-
-/* Space between labels and inputs for forms */
-form input, 
-form select, 
-form button {
-    margin-top: 10px;
-    padding: 12px;
-    border-radius: 5px;
-    border: none;
-    width: 100%;
-    font-size: 1rem;
-}
-
-/* Update modal styles for spacing */
-.modal {
-    background-color: #3C3D37;
+.content {
+    margin-left: 220px; /* Space for the sidebar */
     padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
+}
+
+.content-section {
+    display: none; /* Hide all sections initially */
+}
+
+.content-section.hidden {
+    display: none; /* Ensure hidden sections remain hidden */
+}
+
+.hidden {
+    display: none; /* Class to hide elements */
+}
+
+.top-bar {
     display: flex;
-    flex-direction: column;
-    width: 400px;
+    justify-content: space-between;
+    align-items: center;
 }
 
-input, select, button {
-    margin-top: 10px;
-    padding: 12px;
-    border-radius: 5px;
-    border: none;
-    width: 100%;
-    font-size: 1rem;
+.exit-btn {
+    background: none;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
-/* Rest of your styles remain the same */
+.exit-btn:hover {
+    background-color: #555; /* Darker on hover */
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #333; /* List item background */
+}
+
+ul li:hover {
+    background-color: #444; /* List item hover effect */
+}
+
+.modal {
+    display: none; /* Initially hidden */
+}
+
+.modal.hidden {
+    display: block; /* Show when not hidden */
+}
